@@ -38,6 +38,9 @@
 import OutVariant1 from './words/out/variant1.vue';
 import OutVariant2 from './words/out/variant2.vue';
 import OutVariant3 from './words/out/variant3.vue';
+import MouthVariant1 from './words/mouth/variant1.vue';
+import MouthVariant2 from './words/mouth/variant2.vue';
+import MouthVariant3 from './words/mouth/variant3.vue';
 
 export default {
   name: 'QuestionCard',
@@ -46,6 +49,9 @@ export default {
     'out-1': OutVariant1,
     'out-2': OutVariant2,
     'out-3': OutVariant3,
+    'mouth-1': MouthVariant1,
+    'mouth-2': MouthVariant2,
+    'mouth-3': MouthVariant3,
   },
 
   props: {

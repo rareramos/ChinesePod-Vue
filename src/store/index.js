@@ -16,17 +16,17 @@ export default new Vuex.Store({
           'It\'s incorrect variant',
         ],
       },
-      // {
-      //   word: 'mouth',
-      //   correct: 1,
-      //   descriptions: [
-      //     '',
-      //     'The character we are looking for resembles an open mouth. Maybe try to open it up a '
-      //     + 'bit more?',
-      //     'This character did look like this thousands of years ago. However, modern characters '
-      //     + 'have developed into square shapes.',
-      //   ],
-      // },
+      {
+        word: 'mouth',
+        correct: 0,
+        descriptions: [
+          '',
+          'The character we are looking for resembles an open mouth. Maybe try to open it up a '
+          + 'bit more?',
+          'This character did look like this thousands of years ago. However, modern characters '
+          + 'have developed into square shapes.',
+        ],
+      },
     ],
   },
   mutations: {
