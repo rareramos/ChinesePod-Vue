@@ -1,20 +1,34 @@
 <template>
-  <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.000000 801.000000"
-       preserveAspectRatio="xMidYMid meet">
-    <g transform="translate(0.000000,801.000000) scale(0.100000,-0.100000)"
-       fill="#000000" stroke="none">
-      <path d="M3725 7744 c-533 -53 -953 -172 -1400 -397 -1077 -542 -1842 -1608
-        -2010 -2802 -49 -349 -49 -731 0 -1080 80 -565 303 -1132 633 -1605 242 -347
-        585 -690 932 -932 496 -345 1061 -562 1680 -645 194 -26 737 -26 930 0 741 99
-        1387 382 1955 856 116 96 350 330 446 446 493 591 786 1280 863 2033 33 320
-        17 751 -40 1062 -119 648 -393 1230 -823 1745 -96 116 -330 350 -446 446 -565
-        471 -1212 755 -1945 855 -119 16 -666 29 -775 18z m475 -954 c1262 -86 2298
-        -985 2558 -2220 75 -353 75 -782 1 -1129 -157 -734 -577 -1352 -1204 -1768
-        -659 -438 -1499 -571 -2266 -359 -183 50 -302 96 -494 191 -282 138 -512 302
-        -736 525 -793 789 -1040 1969 -627 3005 254 638 743 1165 1363 1470 267 132
-        484 203 765 251 230 39 416 49 640 34z"></path>
-    </g>
-  </svg>
+  <div :class="$style.element">
+    <template v-if="!error">
+      <div :class="[$style.symbol, $style.symbolCircle]"></div>
+    </template>
+    <transition name="square">
+      <template v-if="error">
+        <div :class="$style.symbol"></div>
+      </template>
+    </transition>
+    <transition name="fade">
+      <template v-if="error">
+        <div :class="$style.lt"></div>
+      </template>
+    </transition>
+    <transition name="fade">
+      <template v-if="error">
+        <div :class="$style.lb"></div>
+      </template>
+    </transition>
+    <transition name="fade">
+      <template v-if="error">
+        <div :class="$style.rt"></div>
+      </template>
+    </transition>
+    <transition name="fade">
+      <template v-if="error">
+        <div :class="$style.rb"></div>
+      </template>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -30,5 +44,70 @@
   };
 </script>
 
+<style>
+.square-enter-active {
+  animation: square-transform 2.5s;
+}
+
+@keyframes square-transform {
+  0% {
+    border-radius: 100%;
+  }
+  50% {}
+  100% {
+    transform: scale(1);
+  }
+}
+</style>
+
 <style lang="scss" module>
+  .element {
+    position: relative;
+    padding: 25px;
+
+    .lt, .lb, .rt, .rb {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      border-radius: 50px;
+      background: rgba(254, 252, 158, 0.7);
+
+    }
+
+    .lt {
+      top: 5%;
+      left: 5%;
+    }
+
+    .lb {
+      top: 64%;
+      left: 5%;
+    }
+
+    .rt {
+      top: 5%;
+      left: 64%;
+    }
+
+    .rb {
+      top: 64%;
+      left: 64%;
+    }
+
+    .symbol {
+      height: 105px;
+      width: 105px;
+      margin: 0 auto;
+      border: 23px black solid;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-out;
+      animation-direction: alternate;
+      animation-fill-mode: none;
+      animation-play-state: running;
+    }
+
+    .symbolCircle {
+      border-radius: 100%;
+    }
+  }
 </style>

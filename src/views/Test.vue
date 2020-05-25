@@ -1,10 +1,13 @@
 <template>
   <div
     :class="$style.test">
-    <question-card
-      :details="currentQuestion"
-      @correct-answer="addCorrectAnswer"
-      @next="goToNextQuestion" />
+    <transition name="fade">
+      <question-card
+        v-if="isQuestionShown"
+        :details="currentQuestion"
+        @correct-answer="addCorrectAnswer"
+        @next="goToNextQuestion" />
+    </transition>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ export default {
     return {
       current: 0,
       correctAnswers: 0,
+      isQuestionShown: true,
     };
   },
 
@@ -44,7 +48,11 @@ export default {
   methods: {
     async goToNextQuestion() {
       if (this.current < this.words.length - 1) {
-        this.current += 1;
+        this.isQuestionShown = false;
+        setTimeout(() => {
+          this.current += 1;
+          this.isQuestionShown = true;
+        }, 1500);
       } else {
         await this.$router.push({ path: 'results', query: { answers: this.correctAnswers } });
       }

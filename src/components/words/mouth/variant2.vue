@@ -11,6 +11,10 @@
         <path d="m750,4005l0,-3465l535,0l535,0l0,345l0,345l2245,0l2245,0l0,-335l0,-335l560,0l560,0l0,3455l0,3455l-560,
         0l-560,0l0,-2595l0,-2595l-2245,0l-2245,0l0,2595l0,2595l-535,0l-535,0l0,-3465z" id="svg_2"></path>
       </g>
+      <template v-if="!error">
+        <rect fill="#000000" stroke-width="1.5" x="179.911775" y="308" width="452.941186" height="101.176474"
+              id="svg_3" stroke="#000"></rect>
+      </template>
       <transition name="slide">
         <template v-if="error">
           <rect fill="#000000" stroke-width="1.5" x="179.911775" y="55" width="452.941186" height="101.176474"

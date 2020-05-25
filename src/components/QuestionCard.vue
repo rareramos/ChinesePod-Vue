@@ -9,18 +9,18 @@
       <div
         v-for="variant in 3"
         :key="variant"
-        @click="chooseVariant(variant)">
+        @click="chooseVariant(variant - 1)">
         <component
           :is="getVariantComponentName(word, variant)"
-          :error="error" />
+          :error="error[variant - 1]" />
       </div>
     </div>
     <div
       :class="$style.error">
       <transition name="fade" mode="out-in">
         <div
-          v-if="error">
-            {{ details.descriptions[selected - 1] }}
+          v-if="error[selected]">
+            {{ details.descriptions[selected] }}
         </div>
       </transition>
     </div>
@@ -64,7 +64,11 @@ export default {
   data() {
     return {
       selected: -1,
-      error: false,
+      error: [
+        false,
+        false,
+        false,
+      ]
     };
   },
 
@@ -74,6 +78,18 @@ export default {
     },
   },
 
+  mounted() {
+    console.log('mounted');
+  },
+
+  created() {
+    console.log('created');
+  },
+
+  // mounted() {
+  //   Object.assign(this.$data, this.$options.data());
+  // },
+
   methods: {
     nextQuestion() {
       this.$emit('next');
@@ -81,13 +97,13 @@ export default {
 
     chooseVariant(variant) {
       this.selected = variant;
-      this.error = false;
+      this.$set(this.error, variant, false);
 
-      if (this.details.correct === variant - 1) {
+      if (this.details.correct === variant) {
         this.$emit('correct-answer');
         this.nextQuestion();
       } else {
-        this.error = true;
+        this.$set(this.error, variant, true);
       }
     },
 
