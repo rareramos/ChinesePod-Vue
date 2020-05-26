@@ -98,6 +98,7 @@ export default {
       if (this.correct === variant) {
         this.$emit('correct-answer');
         this.nextQuestion();
+        this.runAudioEffect('correct answer.wav');
       } else {
         this.$set(this.error, variant, true);
       }
