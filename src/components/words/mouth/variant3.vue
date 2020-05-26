@@ -1,5 +1,7 @@
 <template>
-  <div :class="$style.element">
+  <div
+    :class="$style.element"
+    @click="runAudioEffect">
     <template v-if="!error">
       <div :class="[$style.symbol, $style.symbolCircle]"></div>
     </template>
@@ -85,7 +87,15 @@
           }, 1500);
         }
       }
-    }
+    },
+
+    methods: {
+      runAudioEffect() {
+        document.body.click();
+        const audio = new Audio(require(`../../../assets/sounds/1-31.wav`));
+        audio.play();
+      }
+    },
   };
 </script>
 
