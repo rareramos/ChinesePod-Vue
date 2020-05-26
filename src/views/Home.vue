@@ -3,11 +3,13 @@
     v-if="show"
     :class="$style.home">
     <h1>Character structures</h1>
-    <button
-      :class="$style.goButton"
-      @click="goToTest">
+    <particle-effect-button
+      :visible.sync="goButtonOptions.visible"
+      :animating.sync="goButtonOptions.animating"
+      :options="goButtonOptions"
+      :cls="$style.goButton">
       Let's go
-    </button>
+    </particle-effect-button>
     <button
       :class="$style.backButton"
       @click="goToResults">
@@ -17,13 +19,37 @@
 </template>
 
 <script>
+import ParticleEffectButton from "vue-particle-effect-buttons";
 
 export default {
   name: 'Home',
 
+  components: {
+    ParticleEffectButton,
+  },
+
   data() {
     return {
       show: false,
+      goButtonOptions: {
+        type: "triangle",
+        duration: 1500,
+        easing: "easeOutQuart",
+        size: 6,
+        particlesAmountCoefficient: 4,
+        oscillationCoefficient: 2,
+        color: "#000000",
+        onBegin: () => {
+          const audio = new Audio(require('../assets/sounds/click letsgo.wav'));
+          audio.play();
+
+          setTimeout(async () => {
+            await this.$router.push({ path: 'test' });
+          }, 1000);
+        },
+        visible: true,
+        animating: false
+      },
     };
   },
 
@@ -37,10 +63,6 @@ export default {
   },
 
   methods: {
-    async goToTest() {
-      await this.$router.push({ path: 'test' });
-    },
-
     async goToResults() {
       await this.$router.push({ path: 'results' });
     },
@@ -74,8 +96,14 @@ export default {
     }
 
     .goButton {
+      width: 160px;
+      padding: 10px;
       background: #000;
       margin-bottom: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 28px;
+      border-radius: 10px;
     }
 
     .backButton {

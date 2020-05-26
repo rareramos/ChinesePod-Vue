@@ -4,7 +4,7 @@
     <transition name="fade">
       <question-card
         v-if="isQuestionShown"
-        :details="currentQuestion"
+        v-bind="currentQuestion"
         @correct-answer="addCorrectAnswer"
         @next="goToNextQuestion" />
     </transition>

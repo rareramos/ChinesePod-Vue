@@ -15,7 +15,7 @@
         -110,0l-110,0l0,-250z">
       </path>
     </g>
-    <transition name="fade">
+    <transition name="fade-out">
       <template v-if="error">
         <ellipse ry="21.886789" rx="28.867921" id="svg_4" cy="88.014153" cx="80.603774"
                  fill-opacity="0.7" stroke-width="0" stroke="#000" fill="#ffffcc"></ellipse>
@@ -39,10 +39,10 @@ export default {
 </script>
 
 <style lang="scss">
-  .fade-enter-active, .fade-leave-active {
+  .fade-out-enter-active, .fade-out-leave-active {
     transition: opacity 2.5s;
   }
-  .fade-enter, .fade-leave-to {
+  .fade-out-enter, .fade-out-leave-to {
     opacity: 0;
   }
 </style>

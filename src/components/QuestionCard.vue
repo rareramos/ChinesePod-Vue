@@ -20,7 +20,7 @@
       <transition name="fade" mode="out-in">
         <div
           v-if="error[selected]">
-            {{ details.descriptions[selected] }}
+            {{ descriptions[selected] }}
         </div>
       </transition>
     </div>
@@ -55,8 +55,16 @@ export default {
   },
 
   props: {
-    details: {
-      type: Object,
+    word: {
+      type: String,
+      required: true,
+    },
+    correct: {
+      type: Number,
+      required: true,
+    },
+    descriptions: {
+      type: Array,
       required: true,
     },
   },
@@ -72,23 +80,11 @@ export default {
     };
   },
 
-  computed: {
-    word() {
-      return this.details.word || '';
-    },
-  },
-
-  mounted() {
-    console.log('mounted');
-  },
-
   created() {
-    console.log('created');
+    if (this.word === 'mouth') {
+      this.runAudioEffect('1-20.wav');
+    }
   },
-
-  // mounted() {
-  //   Object.assign(this.$data, this.$options.data());
-  // },
 
   methods: {
     nextQuestion() {
@@ -99,7 +95,7 @@ export default {
       this.selected = variant;
       this.$set(this.error, variant, false);
 
-      if (this.details.correct === variant) {
+      if (this.correct === variant) {
         this.$emit('correct-answer');
         this.nextQuestion();
       } else {
@@ -110,6 +106,12 @@ export default {
     getVariantComponentName(word, variant) {
       return `${word}-${variant}`;
     },
+
+    runAudioEffect(filename) {
+      document.body.click();
+      const audio = new Audio(require(`../assets/sounds/${filename}`));
+      audio.play();
+    }
   },
 };
 </script>
