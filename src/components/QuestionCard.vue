@@ -5,6 +5,14 @@
       Find the character for "{{ word }}"
     </h1>
     <div
+      :class="$style.unknown"
+      title="I don’t know">
+      <button
+        @click="nextQuestion">
+        &#65794;
+      </button>
+    </div>
+    <div
       :class="$style.variants">
       <div
         v-for="variant in 3"
@@ -23,13 +31,6 @@
             {{ descriptions[selected] }}
         </div>
       </transition>
-    </div>
-    <div
-      :class="$style.unknown">
-      <button
-        @click="nextQuestion">
-        I don't know
-      </button>
     </div>
   </div>
 </template>
@@ -175,7 +176,10 @@ export default {
       padding: 0 50px;
 
       button {
+        width: auto;
         background: #757070;
+        padding: 6px 20px;
+        font-size: 45px;
       }
     }
   }
