@@ -8,7 +8,7 @@
       :class="$style.unknown"
       title="I don’t know">
       <button
-        @click="nextQuestion">
+        @click="skipQuestion">
         &#65794;
       </button>
     </div>
@@ -103,6 +103,11 @@ export default {
       } else {
         this.$set(this.error, variant, true);
       }
+    },
+
+    skipQuestion() {
+      this.runAudioEffect('button click.wav');
+      this.nextQuestion();
     },
 
     getVariantComponentName(word, variant) {

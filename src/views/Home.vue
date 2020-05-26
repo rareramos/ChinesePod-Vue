@@ -40,8 +40,7 @@ export default {
         oscillationCoefficient: 2,
         color: "#000000",
         onBegin: () => {
-          const audio = new Audio(require('../assets/sounds/click letsgo.wav'));
-          audio.play();
+          this.runAudioEffect('click letsgo.wav');
 
           setTimeout(async () => {
             await this.$router.push({ path: 'test' });
@@ -64,7 +63,14 @@ export default {
 
   methods: {
     async goToResults() {
+      this.runAudioEffect('button click.wav');
       await this.$router.push({ path: 'results' });
+    },
+
+    runAudioEffect(filename) {
+      document.body.click();
+      const audio = new Audio(require(`../assets/sounds/${filename}`));
+      audio.play();
     },
   },
 };

@@ -17,8 +17,15 @@ export default {
 
   methods: {
     async goToStart() {
+      this.runAudioEffect('button click.wav');
       await this.$router.push({ path: '/' });
-    }
+    },
+
+    runAudioEffect(filename) {
+      document.body.click();
+      const audio = new Audio(require(`../assets/sounds/${filename}`));
+      audio.play();
+    },
   }
 };
 </script>
