@@ -6,16 +6,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     words: [
-      {
-        word: 'out',
-        correct: 0,
-        descriptions: [
-          '',
-          'It\'s correct that this character is made up of two parts. However, these two parts '
-          + 'need to be glued together.',
-          'It\'s incorrect variant',
-        ],
-      },
+      // {
+      //   word: 'out',
+      //   correct: 0,
+      //   descriptions: [
+      //     '',
+      //     'It\'s correct that this character is made up of two parts. However, these two parts '
+      //     + 'need to be glued together.',
+      //     'It\'s incorrect variant',
+      //   ],
+      // },
       {
         word: 'mouth',
         correct: 0,

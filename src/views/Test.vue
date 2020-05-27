@@ -6,6 +6,7 @@
         v-if="isQuestionShown"
         v-bind="currentQuestion"
         @correct-answer="addCorrectAnswer"
+        @same="goToSameQuestion"
         @next="goToNextQuestion" />
     </transition>
   </div>
@@ -56,6 +57,13 @@ export default {
       } else {
         await this.$router.push({ path: 'results', query: { answers: this.correctAnswers } });
       }
+    },
+
+    goToSameQuestion() {
+      this.isQuestionShown = false;
+      setTimeout(() => {
+        this.isQuestionShown = true;
+      }, 1500);
     },
 
     addCorrectAnswer() {

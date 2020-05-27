@@ -5,12 +5,11 @@
       Find the character for "{{ word }}"
     </h1>
     <div
-      :class="$style.unknown"
-      title="I don’t know">
-      <button
-        @click="skipQuestion">
-        &#65794;
-      </button>
+      :class="$style.closeContainer"
+      @click="skipQuestion">
+      <div :class="$style.leftright"></div>
+      <div :class="$style.rightleft"></div>
+      <label :class="$style.close">I don't know</label>
     </div>
     <div
       :class="$style.variants">
@@ -20,7 +19,8 @@
         @click="chooseVariant(variant - 1)">
         <component
           :is="getVariantComponentName(word, variant)"
-          :error="error[variant - 1]" />
+          :error="error[variant - 1]"
+          @same="sameQuestion" />
       </div>
     </div>
     <div
@@ -36,12 +36,16 @@
 </template>
 
 <script>
+import { TimelineLite } from 'gsap';
+
 import OutVariant1 from './words/out/variant1.vue';
 import OutVariant2 from './words/out/variant2.vue';
 import OutVariant3 from './words/out/variant3.vue';
 import MouthVariant1 from './words/mouth/variant1.vue';
 import MouthVariant2 from './words/mouth/variant2.vue';
 import MouthVariant3 from './words/mouth/variant3.vue';
+
+import { runAudioEffect } from "../utils";
 
 export default {
   name: 'QuestionCard',
@@ -83,13 +87,17 @@ export default {
 
   created() {
     if (this.word === 'mouth') {
-      this.runAudioEffect('1-20.wav');
+      runAudioEffect(require(`../assets/sounds/1-20.wav`));
     }
   },
 
   methods: {
     nextQuestion() {
       this.$emit('next');
+    },
+
+    sameQuestion() {
+      this.$emit('same');
     },
 
     chooseVariant(variant) {
@@ -99,14 +107,17 @@ export default {
       if (this.correct === variant) {
         this.$emit('correct-answer');
         this.nextQuestion();
-        this.runAudioEffect('correct answer.wav');
+        runAudioEffect(require(`../assets/sounds/correct answer.wav`));
       } else {
-        this.$set(this.error, variant, true);
+        this.showIncorrectVariant();
+        setTimeout(() => {
+          this.$set(this.error, variant, true);
+        }, 500);
       }
     },
 
     skipQuestion() {
-      this.runAudioEffect('button click.wav');
+      runAudioEffect(require(`../assets/sounds/button click.wav`));
       this.nextQuestion();
     },
 
@@ -114,10 +125,27 @@ export default {
       return `${word}-${variant}`;
     },
 
-    runAudioEffect(filename) {
-      document.body.click();
-      const audio = new Audio(require(`../assets/sounds/${filename}`));
-      audio.play();
+    showIncorrectVariant() {
+      const idSVG = '#fig-';
+      const tl = new TimelineLite();
+      const otherVariants = [1, 2, 3].filter(e => e !== this.selected + 1);
+
+      const element1 = document.querySelector(idSVG + otherVariants[0]).parentNode;
+      const element2 = document.querySelector(idSVG + otherVariants[1]).parentNode;
+      const element3 = document.querySelector(idSVG + (this.selected + 1)).parentNode;
+      const transformIncorrect = {transform: 'scale(1.5)'};
+
+      if (this.selected === 0) {
+        transformIncorrect['x'] = '210px';
+      } else if (this.selected === 2) {
+        transformIncorrect['x'] = '-210px';
+      }
+
+      tl.to(element1, 1, {x: -700, scaleY: 0});
+      tl.to(element2, 1, {x: 700, scaleY: 0}, '-=1');
+      tl.to(element3, transformIncorrect, '-=1');
+
+      runAudioEffect(require(`../assets/sounds/highlight.wav`));
     }
   },
 };
@@ -176,16 +204,65 @@ export default {
       }
     }
 
-    .unknown {
-      text-align: right;
-      padding: 0 50px;
+    $softorange: #c00000;
+    $tomatored: #F25C66;
+    $mediumblu: #1E272D;
 
-      button {
-        width: auto;
-        background: #757070;
-        padding: 6px 20px;
-        font-size: 45px;
-      }
+    .closeContainer {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      float: right;
+      right: 10%;
+      cursor: pointer;
+    }
+
+    .leftright {
+      height: 4px;
+      width: 50px;
+      position: absolute;
+      margin-top: 24px;
+      background-color: $softorange;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      transition: all .3s ease-in;
+    }
+
+    .rightleft {
+      height: 4px;
+      width: 50px;
+      position: absolute;
+      margin-top: 24px;
+      background-color: $softorange;
+      border-radius: 2px;
+      transform: rotate(-45deg);
+      transition: all .3s ease-in;
+    }
+
+    label {
+      width: 200px;
+      margin-left: -50px;
+      font-size: .9em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all .3s ease-in;
+      opacity: 0;
+    }
+    .close {
+      margin: 60px 0 0 -100px;
+      position: absolute;
+    }
+
+    .closeContainer:hover .leftright {
+      transform: rotate(-45deg);
+      background-color: $tomatored;
+    }
+    .closeContainer:hover .rightleft {
+      transform: rotate(45deg);
+      background-color: $tomatored;
+    }
+    .closeContainer:hover label {
+      opacity: 1;
     }
   }
 </style>

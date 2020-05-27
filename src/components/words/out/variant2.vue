@@ -1,5 +1,5 @@
 <template>
-<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+<svg id="fig-2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
   <g>
     <rect fill="none" id="canvas_background" height="186" width="170" y="-1" x="-1" ></rect>
   </g>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'OutVariant1',
+  name: 'OutVariant2',
 
   props: {
     error: {

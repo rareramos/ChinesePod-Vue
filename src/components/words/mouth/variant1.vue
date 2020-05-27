@@ -1,13 +1,15 @@
 <template>
-  <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.000000 801.000000"
-       preserveAspectRatio="xMidYMid meet">
-    <g transform="translate(0.000000,801.000000) scale(0.100000,-0.100000)"
-       fill="#000000" stroke="none">
-      <path d="M860 4005 l0 -3235 500 0 500 0 0 325 0 325 2095 0 2095 0 0 -315 0
-        -315 520 0 520 0 0 3225 0 3225 -3115 0 -3115 0 0 -3235z m5190 335 l0 -1940
-        -2095 0 -2095 0 0 1940 0 1940 2095 0 2095 0 0 -1940z"></path>
-      <ellipse cx="12.2" cy="11" rx="9.7" ry="8.3" stroke="green" opacity=".5"></ellipse>
+  <svg id="fig-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+    <g>
+      <line x1="775.04" y1="690.15" x2="124.96" y2="690.15" fill="none"
+            stroke="#000" stroke-width="95"></line>
+      <line x1="124.96" y1="77.46" x2="124.96" y2="822.54" fill="none"
+            stroke="#000" stroke-width="95"></line>
+      <line x1="775.04" y1="77.46" x2="775.04" y2="822.54" fill="none"
+            stroke="#000" stroke-width="95"></line>
     </g>
+    <line x1="775.04" y1="124.96" x2="124.96" y2="124.96" fill="none"
+          stroke="#000" stroke-width="95"></line>
   </svg>
 </template>
 

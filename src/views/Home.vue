@@ -103,13 +103,13 @@ export default {
 
     .goButton {
       width: 160px;
-      padding: 10px;
-      background: #000;
-      margin-bottom: 20px;
+      padding: 10px !important;
+      background: #000 !important;;
+      margin-bottom: 20px !important;;
       text-transform: uppercase;
       font-weight: bold;
       font-size: 28px;
-      border-radius: 10px;
+      border-radius: 10px !important;;
     }
 
     .backButton {
