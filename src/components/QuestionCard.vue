@@ -4,14 +4,16 @@
     <h1>
       Find the character for "{{ word }}"
     </h1>
-    <div
-      v-if="isCloseShown"
-      :class="$style.closeContainer"
-      @click="skipQuestion">
-      <div :class="$style.leftright"></div>
-      <div :class="$style.rightleft"></div>
-      <label :class="$style.close">I don't know</label>
-    </div>
+    <transition name="fade">
+      <div
+        v-if="isCloseShown"
+        :class="$style.closeContainer"
+        @click="skipQuestion">
+        <div :class="$style.leftright"></div>
+        <div :class="$style.rightleft"></div>
+        <label :class="$style.close">I don't know</label>
+      </div>
+    </transition>
     <div
       :class="$style.variants">
       <div
@@ -24,6 +26,17 @@
           @same="sameQuestion" />
       </div>
     </div>
+    <transition name="fade">
+      <div
+        v-if="isAllHintsShown"
+        :class="$style.unknown">
+        <div
+          v-for="text in descriptions"
+          :key="text">
+          {{ text }}
+        </div>
+      </div>
+    </transition>
     <div
       :class="$style.error">
       <transition name="fade" mode="out-in">
@@ -84,6 +97,7 @@ export default {
         false,
       ],
       isCloseShown: true,
+      isAllHintsShown: false,
     };
   },
 
@@ -120,8 +134,17 @@ export default {
     },
 
     skipQuestion() {
+      const idSVG = '#fig-';
+      const tl = new TimelineLite();
+
       runAudioEffect(require(`../assets/sounds/button click.wav`));
-      this.nextQuestion();
+      this.isAllHintsShown = true;
+      this.isCloseShown = false;
+
+      debugger;
+      tl.to(document.querySelector(idSVG + (this.correct + 1)).parentNode, 1, {transform: 'scale(1.2)'});
+      setTimeout(runAudioEffect(require(`../assets/sounds/correct answer.wav`)), 500);
+      setTimeout(this.nextQuestion, 1000);
     },
 
     getVariantComponentName(word, variant) {
@@ -154,6 +177,15 @@ export default {
 };
 </script>
 
+<style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 1.5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+</style>
+
 <style lang="scss" module>
   .question {
     h1 {
@@ -170,7 +202,7 @@ export default {
       > div {
         width: 200px;
         height: 200px;
-        margin: 0 20px;
+        margin: 0 50px;
         border-radius: 20px;
         border: 2px #fff dashed;
         cursor: pointer;
@@ -266,6 +298,25 @@ export default {
     }
     .closeContainer:hover label {
       opacity: 1;
+    }
+
+    .unknown {
+      display: flex;
+      justify-content: center;
+      margin-top: -50px;
+
+      div {
+        width: 220px;
+        margin: 0 30px;
+        padding: 20px;
+        border: 2px #c00000 dashed;
+        border-radius: 15px;
+
+        &:first-child {
+          border: none !important;
+          width: 160px;
+        }
+      }
     }
   }
 </style>
