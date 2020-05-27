@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { runAudioEffect } from "./utils";
+
 export default {
   name: 'App',
 
@@ -14,9 +16,7 @@ export default {
     document.addEventListener('mouseover', e => {
       if (e.target && (e.target.localName === 'button'
         || String(e.target.className).indexOf('particles-button') > -1)) {
-        document.body.click();  // fix bug with audio running without any clicks
-        const audio = new Audio(require('./assets/sounds/mouse over.wav'));
-        audio.play();
+        runAudioEffect(require('./assets/sounds/mouse over.wav'));
       }
     });
   },

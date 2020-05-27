@@ -5,6 +5,7 @@
       Find the character for "{{ word }}"
     </h1>
     <div
+      v-if="isCloseShown"
       :class="$style.closeContainer"
       @click="skipQuestion">
       <div :class="$style.leftright"></div>
@@ -81,7 +82,8 @@ export default {
         false,
         false,
         false,
-      ]
+      ],
+      isCloseShown: true,
     };
   },
 
@@ -109,6 +111,7 @@ export default {
         this.nextQuestion();
         runAudioEffect(require(`../assets/sounds/correct answer.wav`));
       } else {
+        this.isCloseShown = false;
         this.showIncorrectVariant();
         setTimeout(() => {
           this.$set(this.error, variant, true);

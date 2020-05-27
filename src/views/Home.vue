@@ -11,6 +11,7 @@
       Let's go
     </particle-effect-button>
     <button
+      disabled
       :class="$style.backButton"
       @click="goToResults">
       Go back
@@ -20,6 +21,8 @@
 
 <script>
 import ParticleEffectButton from "vue-particle-effect-buttons";
+
+import { runAudioEffect } from "../utils";
 
 export default {
   name: 'Home',
@@ -40,7 +43,7 @@ export default {
         oscillationCoefficient: 2,
         color: "#000000",
         onBegin: () => {
-          this.runAudioEffect('click letsgo.wav');
+          runAudioEffect(require('../assets/sounds/click letsgo.wav'));
 
           setTimeout(async () => {
             await this.$router.push({ path: 'test' });
@@ -63,14 +66,8 @@ export default {
 
   methods: {
     async goToResults() {
-      this.runAudioEffect('button click.wav');
+      runAudioEffect(require('../assets/sounds/button click.wav'));
       await this.$router.push({ path: 'results' });
-    },
-
-    runAudioEffect(filename) {
-      document.body.click();
-      const audio = new Audio(require(`../assets/sounds/${filename}`));
-      audio.play();
     },
   },
 };
@@ -98,7 +95,6 @@ export default {
       border: 0;
       outline: none;
       border-radius: 10px;
-      cursor: pointer;
     }
 
     .goButton {
@@ -114,6 +110,7 @@ export default {
 
     .backButton {
       background: #757070;
+      cursor: not-allowed;
     }
   }
 </style>
