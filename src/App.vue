@@ -3,6 +3,7 @@
     <transition name="fade" mode="out-in">
       <router-view />
     </transition>
+    <div id="audio-trash"></div>
   </div>
 </template>
 

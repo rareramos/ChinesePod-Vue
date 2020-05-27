@@ -1,6 +1,6 @@
 
 export function stopAllAudios() {
-  const sounds = document.getElementById('app').getElementsByTagName('audio');
+  const sounds = document.getElementById('audio-trash').getElementsByTagName('audio');
   for(let i = 0; i < sounds.length; i++) {
     sounds[i].pause();
     sounds[i].parentNode.removeChild(sounds[i]);
@@ -8,9 +8,9 @@ export function stopAllAudios() {
 }
 
 export function runAudioEffect(audio) {
-  document.body.click();
+  document.querySelector('div').click();
   stopAllAudios();
   const a = new Audio(audio);
-  document.getElementById('app').appendChild(a);
+  document.getElementById('audio-trash').appendChild(a);
   a.play();
 }
