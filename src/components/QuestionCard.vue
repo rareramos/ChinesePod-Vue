@@ -162,9 +162,9 @@ export default {
       const transformIncorrect = {transform: 'scale(1.5)'};
 
       if (this.selected === 0) {
-        transformIncorrect['x'] = '210px';
+        transformIncorrect['x'] = '260px';
       } else if (this.selected === 2) {
-        transformIncorrect['x'] = '-210px';
+        transformIncorrect['x'] = '-310px';
       }
 
       tl.to(element1, 1, {x: -700, scaleY: 0});
