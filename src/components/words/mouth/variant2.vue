@@ -12,12 +12,9 @@
       <line x1="775.04" y1="424.96" x2="124.96" y2="424.96" fill="none"
             stroke="#000" stroke-width="95"></line>
       <g id="light">
-        <circle cx="450" cy="425.29" r="8" fill="none" stroke="#fefc9e"
-                stroke-width="1.2"></circle>
-        <circle cx="450" cy="425.29" r="8" fill="none" stroke="#fefc9e"
-                stroke-width="1.2"></circle>
-        <circle cx="450" cy="425.29" r="8" fill="none" stroke="#fefc9e"
-                stroke-width="1.2"></circle>
+        <circle cx="450" cy="425.29" r="8" fill="none" stroke-width="1.2"></circle>
+        <circle cx="450" cy="425.29" r="8" fill="none" stroke-width="1.2"></circle>
+        <circle cx="450" cy="425.29" r="8" fill="none" stroke-width="1.2"></circle>
       </g>
     </g>
   </svg>
@@ -52,6 +49,10 @@ export default {
     animate() {
       let idSVG = '#fig-2' + ' ';
 
+      gsap.to(
+        idSVG + '#light > circle', 1,
+        {stroke: "#fefc9e"}
+      );
       gsap.fromTo(
         idSVG + '#light > circle', 1,
         {
