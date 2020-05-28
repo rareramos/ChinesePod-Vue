@@ -8,7 +8,8 @@
       <div
         v-if="isCloseShown"
         :class="$style.closeContainer"
-        @click="skipQuestion">
+        @click="skipQuestion"
+        title="Hey, you can always click here if you are unsure about the answer.">
         <div :class="$style.leftright"></div>
         <div :class="$style.rightleft"></div>
         <label :class="$style.close">I don't know</label>
@@ -28,10 +29,10 @@
     </div>
     <transition name="fade">
       <div
-        v-if="isAllHintsShown"
         :class="$style.unknown">
         <div
-          v-for="text in descriptions"
+          v-for="(text, index) in descriptions"
+          :id="'error-' + (index + 1)"
           :key="text">
           {{ text }}
         </div>
@@ -129,22 +130,49 @@ export default {
         this.showIncorrectVariant();
         setTimeout(() => {
           this.$set(this.error, variant, true);
-        }, 500);
+        }, 1500);
       }
     },
 
     skipQuestion() {
       const idSVG = '#fig-';
+      const idError = '#error-';
       const tl = new TimelineLite();
+
+      const incorrectVariants = [1, 2, 3].filter(e => e !== this.correct + 1);
+      const correctElement = document.querySelector(idSVG + (this.correct + 1)).parentNode;
+
+      tl.to(correctElement, 1, {scaleY: 0});
+
+      incorrectVariants.forEach(index => tl.to(
+        document.querySelector(idSVG + index).parentNode, {scaleY: 0}, '-=1'
+      ));
+
+      incorrectVariants.forEach(index => {
+        const element = document.querySelector(idSVG + index).parentNode;
+        const error = document.querySelector(idError + index);
+
+        tl.to(element, 2, {scaleY: 1});
+        tl.to(error, {scaleY: 1, opacity: 1}, '-=2');
+        tl.to(element, 2, {scaleY: 1});
+        tl.to(error, {scaleY: 1, opacity: 1}, '-=2');
+        tl.to(element, 1.5, {scaleY: 0});
+        tl.to(error, {scaleY: 0, opacity: 0}, '-=1.5');
+      });
+
+
 
       runAudioEffect(require(`../assets/sounds/button click.wav`));
       this.isAllHintsShown = true;
       this.isCloseShown = false;
 
-      debugger;
-      tl.to(document.querySelector(idSVG + (this.correct + 1)).parentNode, 1, {transform: 'scale(1.2)'});
-      setTimeout(runAudioEffect(require(`../assets/sounds/correct answer.wav`)), 500);
-      setTimeout(this.nextQuestion, 1000);
+      setTimeout(() => {
+        tl.to(document.querySelector(idSVG + (this.correct + 1)).parentNode, 1, {transform: 'scale(1.5)'});
+      }, 500);
+      setTimeout(() => {
+        runAudioEffect(require(`../assets/sounds/correct answer.wav`));
+        setTimeout(this.nextQuestion, 500);
+      }, 12500);
     },
 
     getVariantComponentName(word, variant) {
@@ -234,8 +262,11 @@ export default {
         max-width: 400px;
         margin: auto;
         padding: 20px;
-        border: 2px #c00000 dashed;
+        border: 1px #c00000 dashed;
         border-radius: 15px;
+        text-align: left;
+        font-size: 22px;
+        font-family: Roboto Slab;
       }
     }
 
@@ -311,6 +342,7 @@ export default {
         padding: 20px;
         border: 2px #c00000 dashed;
         border-radius: 15px;
+        opacity: 0;
 
         &:first-child {
           border: none !important;

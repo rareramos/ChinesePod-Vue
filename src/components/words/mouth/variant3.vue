@@ -39,12 +39,13 @@
 
     methods: {
       click() {
+        runAudioEffect(require(`../../../assets/sounds/textbox shows.wav`));
         setTimeout(() => {
-          runAudioEffect(require(`../../../assets/sounds/textbox shows.wav`));
-
-          this.animate();
-          runAudioEffect(require(`../../../assets/sounds/1-31.wav`));
-          setTimeout(() => this.$emit('same'), 7000);
+          setTimeout(this.animate, 8500);
+          setTimeout(() => {
+            runAudioEffect(require(`../../../assets/sounds/1-31.wav`));
+          }, 500);
+          setTimeout(() => this.$emit('same'), 15000);
         }, 500);
       },
 

@@ -37,12 +37,13 @@ export default {
 
   methods: {
     click() {
+      runAudioEffect(require(`../../../assets/sounds/textbox shows.wav`));
       setTimeout(() => {
-        runAudioEffect(require(`../../../assets/sounds/textbox shows.wav`));
-
-        this.animate();
-        runAudioEffect(require(`../../../assets/sounds/1-30.wav`));
-        setTimeout(() => this.$emit('same'), 7000);
+        setTimeout(this.animate, 8500);
+        setTimeout(() => {
+          runAudioEffect(require(`../../../assets/sounds/1-30.wav`));
+        }, 500);
+        setTimeout(() => this.$emit('same'), 11000);
       }, 500);
     },
 

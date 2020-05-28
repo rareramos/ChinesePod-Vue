@@ -16,7 +16,9 @@ export default {
   created() {
     document.addEventListener('mouseover', e => {
       if (e.target && (e.target.localName === 'button'
-        || String(e.target.className).indexOf('particles-button') > -1)) {
+        || String(e.target.className).indexOf('particles-button') > -1
+        || String(e.target.className).indexOf('closeContainer') > -1)) {
+        if (String(e.target.className).indexOf('backButton') > -1) return;
         runAudioEffect(require('./assets/sounds/mouse over.wav'));
       }
     });
@@ -26,6 +28,7 @@ export default {
 
 <style lang="scss">
 #app {
+  margin-top: 25vh;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
