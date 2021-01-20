@@ -10,7 +10,7 @@
   "dependencies": {
     "animejs": "^3.2.0",
     "core-js": "^3.6.4",
-    "gsap": "^3.2.6",
+    "gsap": "^3.6.0",
     "lodash.random": "^3.2.0",
     "vue": "^2.6.11",
     "vue-particle-effect-buttons": "^1.0.4",
